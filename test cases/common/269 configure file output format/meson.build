@@ -27,6 +27,12 @@ config_json = configure_file(
     output: 'config.json'
 )
 
+config_esm = configure_file(
+    configuration: data,
+    output_format: 'esm',
+    output: 'config.mjs'
+)
+
 config_mg = configure_file(
     configuration: data,
     macro_name: 'CONFIG_MAGNESIUM_H',
@@ -39,9 +45,11 @@ compare_py = files('compare.py')
 expected_config_h = files('expected/config.h')
 expected_config_nasm = files('expected/config.nasm')
 expected_config_json = files('expected/config.json')
+expected_config_esm = files('expected/config.mjs')
 expected_config_mg = files('expected/config.mg')
 
 test('c_output', py, args: [compare_py, expected_config_h, config_h])
 test('nasm_output', py, args: [compare_py, expected_config_nasm, config_nasm])
 test('json_output', py, args: [compare_py, expected_config_json, config_json])
+test('esm_output', py, args: [compare_py, expected_config_esm, config_esm])
 test('c_mg_output', py, args: [compare_py, expected_config_mg, config_mg])
